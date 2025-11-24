@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiết Kế Website Bán Laptop - CSS Flexbox</title>
+    <!-- Tải Tailwind CSS CDN để sử dụng các lớp tiện ích Flexbox -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tùy chỉnh font chữ Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Tùy chỉnh thanh cuộn cho một chút thẩm mỹ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* CSS tùy chỉnh bổ sung cho Flexbox, mặc dù chủ yếu dùng Tailwind */
+        .product-card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- 1. HEADER & NAVIGATION (Sử dụng Flexbox) -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <!-- Flex container cho thanh điều hướng -->
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-bold text-indigo-600 hover:text-indigo-800 transition duration-300">
+                    LAPTOP THÀNH CÔNG
+                </a>
+
+                <!-- Navigation Links (Flex container) -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium transition duration-200">Trang Chủ</a>
+                    <a href="#products" class="text-gray-600 hover:text-indigo-600 font-medium transition duration-200">Sản Phẩm</a>
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium transition duration-200">Giới Thiệu</a>
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 font-medium transition duration-200">Liên Hệ</a>
+                </div>
+
+                <!-- Shopping Cart Icon -->
+                <button class="text-gray-600 hover:text-indigo-600 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Button (ẩn trên desktop) -->
+                <button class="md:hidden text-gray-600 hover:text-indigo-600 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section class="bg-indigo-500 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-extrabold mb-4 leading-tight">
+                Sức Mạnh Vô Tận, Thiết Kế Đỉnh Cao
+            </h1>
+            <p class="text-xl mb-8">
+                Khám phá những mẫu laptop mới nhất với hiệu năng vượt trội và giá tốt nhất.
+            </p>
+            <a href="#products" class="inline-block bg-white text-indigo-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-105">
+                Xem Ngay Sản Phẩm Mới
+            </a>
+        </div>
+    </section>
+
+    <!-- 3. MAIN PRODUCT GRID (Sử dụng Flexbox cho Responsive Grid) -->
+    <main id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-indigo-700">LAPTOP HOT NHẤT</h2>
+
+        <!-- Flex Container cho lưới sản phẩm -->
+        <div class="flex flex-wrap -mx-4 justify-center">
+
+            <!-- Dữ liệu sản phẩm mẫu -->
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 1: Asus ROG Zephyrus G14 (Ảnh đã thay đổi) -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- Đã thay thế ảnh placeholder bằng URL ảnh Gaming Laptop mẫu -->
+                    <img class="w-full h-48 object-cover" src="/Rog.png" alt="Laptop Gaming">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Asus ROG Zephyrus G14</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">CPU Ryzen 9, RTX 4070, RAM 16GB. Chiến game mượt mà.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">35.990.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 2: Dell XPS 13 Plus (Ảnh đã thay đổi) -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- Đã thay thế ảnh placeholder bằng URL ảnh Dell XPS mẫu -->
+                    <img class="w-full h-48 object-cover" src="dell-xps-13-plus-9320-23.jpg" alt="Laptop Văn Phòng">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Dell XPS 13 Plus</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">Thiết kế mỏng nhẹ, màn hình OLED tuyệt đẹp. Hoàn hảo cho công việc.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">28.500.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 3: MacBook Pro M3 (Ảnh đã thay đổi) -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- Đã thay thế ảnh placeholder bằng URL ảnh Macbook mẫu -->
+                    <img class="w-full h-48 object-cover" src="/macbook.jpeg" alt="Macbook Pro">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">MacBook Pro M3 (14-inch)</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">Chip M3 Pro mạnh mẽ, thời lượng pin siêu khủng. Dành cho dân sáng tạo.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">42.000.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 4: HP Pavilion Aero 13 (Ảnh đã thay đổi) -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- Đã thay thế ảnh placeholder bằng URL ảnh Laptop học sinh mẫu -->
+                    <img class="w-full h-48 object-cover" src="/hocsinh.png" alt="Laptop Học Sinh">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">HP Pavilion Aero 13</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">Màn hình 2K, trọng lượng nhẹ dưới 1kg. Rất phù hợp cho sinh viên.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">17.290.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Thêm 4 sản phẩm nữa - Vẫn giữ ảnh Placeholder -->
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 5 -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- CHỈNH SỬA ĐƯỜNG DẪN ẢNH TẠI ĐÂY -->
+                    <img class="w-full h-48 object-cover" src="LG.jpg" alt="Laptop Mỏng Nhẹ">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">LG Gram 17 (2024)</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">Màn hình 17 inch nhưng trọng lượng siêu nhẹ. Pin cực trâu.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">30.150.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 6 -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- CHỈNH SỬA ĐƯỜNG DẪN ẢNH TẠI ĐÂY -->
+                    <img class="w-full h-48 object-cover" src="lennovo.jpg" alt="Laptop Đồ Họa">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Lenovo Legion Pro 7i</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">Hiệu năng tối đa cho đồ họa 3D và lập trình.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">38.990.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 7 -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- CHỈNH SỬA ĐƯỜNG DẪN ẢNH TẠI ĐÂY -->
+                    <img class="w-full h-48 object-cover" src="microsoft-surface-pro-9-1.jpg" alt="Laptop 2in1">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Microsoft Surface Pro 9</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">Thiết bị 2-in-1 linh hoạt, dùng như tablet hoặc laptop.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">25.790.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                <!-- Product Card 8 -->
+                <div class="product-card-hover bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 ease-in-out h-full flex flex-col">
+                    <!-- CHỈNH SỬA ĐƯỜNG DẪN ẢNH TẠI ĐÂY -->
+                    <img class="w-full h-48 object-cover" src="ACER.jpg" alt="Laptop Giá Rẻ">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Acer Aspire 5</h3>
+                        <p class="text-gray-500 mb-4 text-sm flex-grow">Cấu hình tốt trong tầm giá, phù hợp cho nhu cầu cơ bản.</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-2xl font-bold text-red-600">12.500.000₫</span>
+                            <button class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200">
+                                Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 4. FOOTER (Sử dụng Flexbox) -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Flex container cho Footer links -->
+            <div class="flex flex-wrap justify-between gap-8 mb-8">
+                <!-- Cột 1: Giới thiệu -->
+                <div class="w-full md:w-1/4">
+                    <h4 class="text-xl font-semibold mb-4 text-indigo-400">Về Chúng Tôi</h4>
+                    <p class="text-gray-400 text-sm">Chuyên cung cấp các dòng laptop chính hãng, bảo hành uy tín, giá cả cạnh tranh.</p>
+                </div>
+
+                <!-- Cột 2: Sản phẩm -->
+                <div class="w-full md:w-1/4">
+                    <h4 class="text-xl font-semibold mb-4 text-indigo-400">Danh Mục</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Laptop Gaming</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Laptop Văn Phòng</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">MacBook</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Linh Kiện</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3: Hỗ trợ -->
+                <div class="w-full md:w-1/4">
+                    <h4 class="text-xl font-semibold mb-4 text-indigo-400">Hỗ Trợ Khách Hàng</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Chính sách bảo hành</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Hướng dẫn mua hàng</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Câu hỏi thường gặp</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 4: Liên hệ -->
+                <div class="w-full md:w-1/4">
+                    <h4 class="text-xl font-semibold mb-4 text-indigo-400">Liên Hệ</h4>
+                    <p class="text-gray-400 text-sm">Email: contact@laptopviet.vn</p>
+                    <p class="text-gray-400 text-sm">Hotline: 1900 6868</p>
+                    <p class="text-gray-400 text-sm">Địa chỉ: 123 Đường Công Nghệ, Hà Nội</p>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="pt-8 mt-8 border-t border-gray-700 text-center text-gray-500 text-sm">
+                &copy; 2025 Laptop Việt. All rights reserved. Sử dụng Flexbox để xây dựng giao diện.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
