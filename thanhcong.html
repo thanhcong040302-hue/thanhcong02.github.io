@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Replacement Simulator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <!-- HERO -->
+  <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-10">
+    <div class="max-w-6xl mx-auto text-center">
+      <h1 class="text-4xl font-bold mb-4">Mô phỏng Thuật toán Thay thế Trang</h1>
+      <p class="text-lg">So sánh trực quan các thuật toán FIFO, LRU và Optimal trong Hệ điều hành</p>
+    </div>
+  </section>
+
+  <!-- INFO SECTION -->
+  <section class="max-w-6xl mx-auto p-8 grid md:grid-cols-3 gap-6">
+    <div class="bg-white rounded-2xl shadow p-5">
+      <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" class="w-16 mb-3">
+      <h2 class="font-semibold text-lg">FIFO</h2>
+      <p class="text-gray-600">Trang vào trước sẽ bị thay thế trước. Đơn giản nhưng không tối ưu.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-5">
+      <img src="https://cdn-icons-png.flaticon.com/512/2620/2620991.png" class="w-16 mb-3">
+      <h2 class="font-semibold text-lg">LRU</h2>
+      <p class="text-gray-600">Thay thế trang ít được sử dụng gần đây nhất.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-5">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-16 mb-3">
+      <h2 class="font-semibold text-lg">Optimal</h2>
+      <p class="text-gray-600">Thuật toán tối ưu lý thuyết với số lỗi trang ít nhất.</p>
+    </div>
+  </section>
+
+  <!-- SIMULATOR -->
+  <section class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl p-8 mb-10">
+    <h2 class="text-2xl font-bold mb-6">Trình mô phỏng</h2>
+
+    <div class="mb-4">
+      <label>Chuỗi tham chiếu</label>
+      <input id="reference" class="w-full border p-2 rounded" value="7,0,1,2,0,3,0,4">
+    </div>
+
+    <div class="mb-4">
+      <label>Số khung trang</label>
+      <input id="frames" type="number" class="w-full border p-2 rounded" value="3">
+    </div>
+
+    <div class="mb-4">
+      <label>Thuật toán</label>
+      <select id="algorithm" class="w-full border p-2 rounded">
+        <option value="fifo">FIFO</option>
+        <option value="lru">LRU</option>
+        <option value="optimal">Optimal</option>
+      </select>
+    </div>
+
+    <button onclick="runSimulation()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl">Chạy</button>
+
+    <div id="result" class="mt-6"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white text-center p-4">
+    <p>© 2026 - Page Replacement Simulator | Thiết kế chuyên nghiệp</p>
+  </footer>
+
+<script>
+function runSimulation() {
+  const ref = document.getElementById('reference').value.split(',').map(Number);
+  const framesCount = parseInt(document.getElementById('frames').value);
+  const algo = document.getElementById('algorithm').value;
+
+  let frames = [];
+  let faults = 0;
+  let history = [];
+
+  if (algo === 'fifo') {
+    let queue = [];
+    ref.forEach(page => {
+      if (!frames.includes(page)) {
+        faults++;
+        if (frames.length < framesCount) {
+          frames.push(page);
+          queue.push(page);
+        } else {
+          let removed = queue.shift();
+          frames[frames.indexOf(removed)] = page;
+          queue.push(page);
+        }
+      }
+      history.push([...frames]);
+    });
+  }
+
+  if (algo === 'lru') {
+    let recent = [];
+    ref.forEach(page => {
+      if (!frames.includes(page)) {
+        faults++;
+        if (frames.length < framesCount) {
+          frames.push(page);
+        } else {
+          let lru = recent.shift();
+          frames[frames.indexOf(lru)] = page;
+        }
+      }
+      recent = recent.filter(p => p !== page);
+      recent.push(page);
+      history.push([...frames]);
+    });
+  }
+
+  if (algo === 'optimal') {
+    ref.forEach((page, i) => {
+      if (!frames.includes(page)) {
+        faults++;
+        if (frames.length < framesCount) {
+          frames.push(page);
+        } else {
+          let farthest = -1;
+          let indexToReplace = 0;
+
+          frames.forEach((f, idx) => {
+            let nextUse = ref.slice(i + 1).indexOf(f);
+            if (nextUse === -1) {
+              indexToReplace = idx;
+            } else if (nextUse > farthest) {
+              farthest = nextUse;
+              indexToReplace = idx;
+            }
+          });
+
+          frames[indexToReplace] = page;
+        }
+      }
+      history.push([...frames]);
+    });
+  }
+
+  let output = `<h3 class='text-xl font-semibold mb-2'>Kết quả</h3>`;
+  output += `<p class='mb-2'>Số lỗi trang: <b>${faults}</b></p>`;
+
+  output += `<div class='overflow-x-auto'><table class='border'>`;
+  history.forEach(step => {
+    output += `<tr>`;
+    for (let i = 0; i < framesCount; i++) {
+      output += `<td class='border px-3 py-2 text-center'>${step[i] ?? ''}</td>`;
+    }
+    output += `</tr>`;
+  });
+  output += `</table></div>`;
+
+  document.getElementById('result').innerHTML = output;
+}
+</script>
+
+</body>
+</html>
